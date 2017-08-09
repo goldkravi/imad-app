@@ -4,9 +4,8 @@ var path = require('path');
 
 var app = express();
 app.use(morgan('combined'));
-
-var art1 = {
-  title:'Title one',
+var articles={
+    'art':{ title:'Title one',
   heading:'Title first',
   date: '09 aug 2017',
   content: `
@@ -20,8 +19,43 @@ var art1 = {
                         Hai this is my first articleHai this is my first articleHai this is my first articleHai this is my first article
                         
                     </p>
+  `},
+    'artone':{
+        title:'Title two',
+  heading:'Title second',
+  date: '09 sep 2017',
+  content: `
+                     <p>
+                        Hai this is my second article Hai this is my first articleHai this is my first articleHai this is my first articleHai this is my first article
+                        Hai this is my secnnd articleHai this is my first article
+                        
+                    </p>
+                    <p>
+                        Hai this is my first articleHai this is my first articleHai this is my first article
+                        Hai this is my first articleHai this is my first articleHai this is my first articleHai this is my first article
+                        
+                    </p>
   `
- };
+    },
+    'arttwo':{
+        title:'Title three',
+  heading:'Title third',
+  date: '09 oct 2017',
+  content: `
+                     <p>
+                        Hai this is my thrid article Hai this is my first articleHai this is my first articleHai this is my first articleHai this is my first article
+                        Hai this is my tird articleHai this is my first article
+                        
+                    </p>
+                    <p>
+                        Hai this is my first articleHai this is my first articleHai this is my first article
+                        Hai this is my first articleHai this is my first articleHai this is my first articleHai this is my first article
+                        
+                    </p>
+  `
+    }
+};
+
 function createTemplate(data){
     var title = data.title;
     var date=data.date;
@@ -64,15 +98,11 @@ return htmlTemplate;
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
-app.get('/ar1',function(req,res){
-    res.send(createTemplate(art1));
+app.get('/:articleName',function(req,res){
+  var articleName=req.params.articleName;
+    res.send(createTemplate(article[articleName]));
 });
-app.get('/ar2',function(req,res){
-    res.sendFile(path.join(__dirname, 'ui', 'artone.html'));
-});
-app.get('/ar3',function(req,res){
-    res.sendFile(path.join(__dirname, 'ui', 'arttwo.html'));
-});
+
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
 });
